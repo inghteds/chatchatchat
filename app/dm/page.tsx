@@ -1,12 +1,12 @@
 "use client";
-import { useEffect, useState, useRef } from "react"; 
-import { Send, ArrowLeft, Info } from "lucide-react"; // ←とiマークを追加
+import { useEffect, useState, useRef } from "react";
+import { Send, ArrowLeft, Info, Image as ImageIcon, X } from "lucide-react";
 import styles from "./dm.module.css";
 import { supabase } from "@/lib/supabaseClient";
 
 export default function DMPage() {
   const [messages, setMessages] = useState([
-    {
+   {
       text: "オフ会楽しかったー！😆",
       sender: "other",
       time: "2024年09月03日午後8時25分",
@@ -395,27 +395,22 @@ export default function DMPage() {
 { text: "おはよ〜！昨日嬉しすぎて寝れなかったﾈﾑｲ", sender: "other", time: "2025年03月05日午前08時50分" },
 { text: "おはよ〜。すごい忙しそうだね（汗）。無理せず頑張ってね！", sender: "other", time: "2025年03月08日午前08時02分" },
 { text: "おはよ〜。暇な時でも返してくれたら嬉しいなー。", sender: "other", time: "2025年03月15日午前07時34分" },
-{ text: "おはよ〜!", sender: "other", time: "2025年07月20日午前07時02分" , image: "/ristcut4.jpg"},
-{ text: "おはよ〜。", sender: "other", time: "2025年07月23日午前08時02分" , image: "/ristcut5.jpg"},
+{ text: "", sender: "other", time: "2025年07月20日午前07時02分" , image: "/ristcut4.jpg"},
+{ text: "", sender: "other", time: "2025年07月23日午前08時02分" , image: "/ristcut5.jpg"},
 { text: "今日の動画面白すぎたw過去１かも", sender: "other", time: "午後09時25分" },
-
-
-
-
-
-
-
   ]);
+
   const [input, setInput] = useState("");
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState("えみ");
   const [isMeView, setIsMeView] = useState(true);
 
+  const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
+
   const toggleName = () => {
     setDisplayName((prev) => (prev === "えみ" ? "いんと" : "えみ"));
-    setIsMeView((prev) => !prev); // ← me / other の左右を反転
+    setIsMeView((prev) => !prev);
   };
-
-  const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
 
   const getDisplaySender = (sender: string) => {
     if (!isMeView) {
@@ -424,39 +419,39 @@ export default function DMPage() {
     return sender;
   };
 
-// 現在時刻を日本語形式で取得（＋6時間）
-// 現在時刻を日本語形式で取得（常に午後9時26分）
-const getCurrentTime = () => {
-  return "午後9時26分";
-};
+  // 現在時刻を日本語形式で取得（固定）
+  const getCurrentTime = () => "午後9時26分";
 
-
-
-  // === フォーム送信でメッセージ送信 ===
+  // === メッセージ送信 ===
   const sendMessage = async (e: React.FormEvent) => {
-    e.preventDefault(); // ← formのデフォルト動作を防ぐ
-    if (!input.trim()) return;
+    e.preventDefault();
 
-      // 前回のsenderを見て、交互に切り替え
-  const lastSender = messages[messages.length - 1]?.sender;
-  const nextSender = lastSender === "me" ? "other" : "me";
+    const hasText = !!input.trim();
+    const hasImage = !!selectedImage;
+
+    if (!hasText && !hasImage) return; // 両方空なら送信しない
+
+    const lastSender = messages[messages.length - 1]?.sender;
+    const nextSender = lastSender === "me" ? "other" : "me";
 
     const newMessage = {
-      text: input,
+      text: hasText ? input : "",
+      image: hasImage ? selectedImage : undefined,
       sender: nextSender,
       time: getCurrentTime(),
     };
 
-    // 画面上に即時反映
+    // 即時反映
     setMessages((prev) => [...prev, newMessage]);
     setInput("");
+    setSelectedImage(null);
 
-    // Supabaseに挿入
+    // Supabaseに送信
     const { error } = await supabase.from("messages").insert([
       {
-        text: input,
-        sender: nextSender,
-        time: getCurrentTime(),
+        text: newMessage.text,
+        sender: newMessage.sender,
+        time: newMessage.time,
         created_at: new Date().toISOString(),
       },
     ]);
@@ -467,57 +462,51 @@ const getCurrentTime = () => {
     }
   };
 
+  // スクロールを常に最新に
   useEffect(() => {
     endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-// 📡 Realtime購読（Broadcast方式＋ログ出力）
-useEffect(() => {
+  // 📡 Realtime購読（Broadcast方式）
+  useEffect(() => {
     const changes = supabase
       .channel(`topic:messages`, { config: { private: true } })
-      .on(
-        "broadcast",
-        { event: "INSERT" },
-        (payload) => {
-          console.log("📨 Broadcastイベント受信:", payload);
+      .on("broadcast", { event: "INSERT" }, (payload) => {
+        console.log("📨 Broadcastイベント受信:", payload);
+        const rec = payload.payload?.record ?? payload.record;
+        if (!rec) return;
 
-          const rec = payload.payload?.record ?? payload.record;
-          if (!rec) {
-            console.warn("⚠️ payloadにrecordが含まれていません:", payload);
-            return;
-          }
+        const newMessage = {
+          text: rec.text ?? "",
+          image: rec.image ?? undefined,
+          sender: rec.sender ?? "other",
+          time: rec.time ?? "",
+        };
 
-          // 新しいメッセージ生成
-          const newMessage = {
-            text: rec.text ?? "",
-            sender: rec.sender ?? "other",
-            time: rec.time ?? "",
-            image: rec.image ?? undefined,
-          };
-
-          console.log("🆕 受信メッセージ:", newMessage);
-
-          // 重複防止
-          setMessages((curr) => {
-            const exists = curr.some(
-              (m) => m.text === newMessage.text && m.time === newMessage.time
-            );
-            if (exists) {
-              console.log("⚙️ 重複メッセージのためスキップ:", newMessage.text);
-              return curr;
-            }
-            console.log("✅ 新メッセージを追加:", newMessage.text);
-            return [...curr, newMessage];
-          });
-        }
-      )
+        setMessages((curr) => {
+          const exists = curr.some(
+            (m) => m.text === newMessage.text && m.time === newMessage.time
+          );
+          return exists ? curr : [...curr, newMessage];
+        });
+      })
       .subscribe((status) => {
         console.log("🔗 チャンネル状態:", status);
       });
 
-}, [supabase]);
+    return () => {
+      supabase.removeChannel(changes);
+    };
+  }, []);
 
-
+  // === 画像選択ハンドラ ===
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setSelectedImage(url);
+    }
+  };
 
   return (
     <div className={styles.pageWrapper}>
@@ -525,10 +514,10 @@ useEffect(() => {
         {/* 固定ヘッダー */}
         <div className={styles.fixedHeader}>
           <ArrowLeft size={20} className={styles.headerIconLeft} />
-            <div
+          <div
             className={styles.headerTitle}
             onClick={toggleName}
-            style={{ cursor: "pointer" }} // ←マウスカーソル変更でわかりやすく
+            style={{ cursor: "pointer" }}
           >
             {displayName}
           </div>
@@ -539,19 +528,11 @@ useEffect(() => {
         <div className={styles.scrollArea}>
           {/* プロフィール */}
           <div className={styles.profileSection}>
-            <img
-              src="/usericon.png"
-              alt="えみ"
-              className={styles.profileIcon}
-            />
+            <img src="/usericon.png" alt="えみ" className={styles.profileIcon} />
             <div className={styles.profileName}>えみ</div>
             <div className={styles.profileId}>Emiiiii0811さん</div>
-            <div className={styles.profileBio}>
-              好き：ホラー映画/いんとチャンネル
-            </div>
-            <div className={styles.profileJoin}>
-              2022年8月入社・61人のフォロワー
-            </div>
+            <div className={styles.profileBio}>好き：ホラー映画/いんとチャンネル</div>
+            <div className={styles.profileJoin}>2022年8月入社・61人のフォロワー</div>
             <div className={styles.profileFollow}>
               あなたがフォローしている人は誰もフォローしていません
             </div>
@@ -562,9 +543,7 @@ useEffect(() => {
           {/* チャット本文 */}
           <div className={styles.chatArea}>
             {messages.map((m, i) => {
-              // ★追加：me/otherを視点で反転
               const viewSender = getDisplaySender(m.sender);
-
               return (
                 <div
                   key={i}
@@ -579,7 +558,7 @@ useEffect(() => {
                       className={styles.messageImage}
                     />
                   )}
-                  <p className={styles.bubble}>{m.text}</p>
+                  {m.text && <p className={styles.bubble}>{m.text}</p>}
                   {m.time && <span className={styles.time}>{m.time}</span>}
                 </div>
               );
@@ -590,6 +569,17 @@ useEffect(() => {
 
         {/* 入力欄 */}
         <form onSubmit={sendMessage} className={styles.inputBar}>
+          <label htmlFor="imageInput">
+            <ImageIcon size={20} style={{ cursor: "pointer", marginRight: 8 }} />
+          </label>
+          <input
+            id="imageInput"
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={handleImageSelect}
+          />
+
           <input
             type="text"
             placeholder="新しいメッセージを開始する"
@@ -600,6 +590,20 @@ useEffect(() => {
             <Send size={18} />
           </button>
         </form>
+
+        {/* 画像プレビュー */}
+        {selectedImage && (
+          <div className={styles.previewWrapper}>
+            <img src={selectedImage} alt="プレビュー" className={styles.previewImage} />
+            <button
+              className={styles.removePreview}
+              onClick={() => setSelectedImage(null)}
+              type="button"
+            >
+              <X size={16} />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
