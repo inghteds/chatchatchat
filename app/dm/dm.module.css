@@ -1,0 +1,206 @@
+.pageWrapper {
+  display: flex;
+  height: 100vh;
+  background: #ffffff;
+}
+
+.sidebarImage {
+  width: 110px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* DMエリア全体 */
+.dmArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  position: relative;
+  width: 100%; /* ←追加 */
+}
+
+/* ===== 固定ヘッダー ===== */
+.fixedHeader {
+  position: fixed;
+  top: 0;
+  left: 0; /* ←120px削除 */
+  right: 0;
+  height: 50px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 20;
+}
+
+.headerTitle {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.headerIconLeft,
+.headerIconRight {
+  color: #333;
+  cursor: pointer;
+}
+
+/* ===== スクロールエリア ===== */
+.scrollArea {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 50px; /* ヘッダーの高さ分 */
+  display: flex;
+  flex-direction: column;
+}
+
+/* プロフィール */
+.profileSection {
+  text-align: center;
+  padding: 24px 16px 16px;
+  background: #fafafa;
+}
+
+.profileIcon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.profileName {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.profileId {
+  color: #555;
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.profileBio {
+  color: #333;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.profileJoin {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #666;
+}
+
+.profileFollow {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #666;
+}
+
+/* 境界線 */
+.divider {
+  border: none;
+  border-bottom: 1px solid #eee;
+  margin: 8px 0 0;
+}
+
+/* ===== チャット本文 ===== */
+.chatArea {
+  flex: 1;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+}
+
+.left {
+  align-items: flex-start;
+}
+
+.right {
+  align-items: flex-end;
+}
+
+/* 吹き出し */
+.bubble {
+  background: #1da1f2;
+  color: white;
+  padding: 8px 14px;
+  max-width: 70%;
+  line-height: 1.4;
+  border-radius: 18px; /* ← デフォルト丸み */
+}
+
+.left .bubble {
+  background: #e6e6e6;
+  color: #000;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+  border-bottom-left-radius: 4; /* ← 壁側（左下）だけ四角 */
+}
+
+.right .bubble {
+  background: #1da1f2;
+  color: #fff;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 4; /* ← 壁側（右下）だけ四角 */
+}
+
+
+.time {
+  font-size: 11px;
+  color: #888;
+  margin-top: 2px;
+}
+
+/* ===== 入力欄 ===== */
+.inputBar {
+  border-top: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 8px;
+  background: #fff;
+  position: sticky;
+  bottom: 0;
+}
+
+.inputBar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: #f9f9f9;
+  border-radius: 20px;
+  padding: 8px 14px;
+}
+
+.inputBar button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #1da1f2;
+}
+
+.messageImage {
+  margin-top: 6px;
+  margin-bottom: 3px;
+  border-radius: 12px;
+  max-width: 400px; /* ← 大きすぎないように調整 */
+  height: auto;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
