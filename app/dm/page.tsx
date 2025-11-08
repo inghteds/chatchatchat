@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react"; 
 import { Send, ArrowLeft, Info } from "lucide-react"; // ←とiマークを追加
 import styles from "./dm.module.css";
 import { supabase } from "@/lib/supabaseClient";
@@ -397,6 +397,7 @@ export default function DMPage() {
 { text: "おはよ〜。暇な時でも返してくれたら嬉しいなー。", sender: "other", time: "2025年03月15日午前07時34分" },
 { text: "おはよ〜!", sender: "other", time: "2025年07月20日午前07時02分" , image: "/rist.png"},
 { text: "おはよ〜。", sender: "other", time: "2025年07月23日午前08時02分" , image: "/rist.png"},
+{ text: "今日の動画面白すぎたw過去１かも", sender: "other", time: "2025年11月8日午後09時25分" },
 
 
 
@@ -414,6 +415,8 @@ export default function DMPage() {
     setIsMeView((prev) => !prev); // ← me / other の左右を反転
   };
 
+  const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
+
   const getDisplaySender = (sender: string) => {
     if (!isMeView) {
       return sender === "me" ? "other" : "me";
@@ -421,15 +424,13 @@ export default function DMPage() {
     return sender;
   };
 
-  // 現在時刻を日本語形式で取得
-  const getCurrentTime = () => {
-    const now = new Date();
-    const h = now.getHours();
-    const m = now.getMinutes().toString().padStart(2, "0");
-    const period = h >= 12 ? "午後" : "午前";
-    const h12 = h % 12 || 12;
-    return `${period}${h12}時${m}分`;
-  };
+// 現在時刻を日本語形式で取得（＋6時間）
+// 現在時刻を日本語形式で取得（常に午後9時26分）
+const getCurrentTime = () => {
+  return "午後9時26分";
+};
+
+
 
   // === フォーム送信でメッセージ送信 ===
   const sendMessage = async (e: React.FormEvent) => {
@@ -465,6 +466,10 @@ export default function DMPage() {
       alert("送信に失敗しました");
     }
   };
+
+  useEffect(() => {
+    endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
 // 📡 Realtime購読（Broadcast方式＋ログ出力）
 useEffect(() => {
@@ -579,6 +584,7 @@ useEffect(() => {
                 </div>
               );
             })}
+            <div ref={endOfMessagesRef} />
           </div>
         </div>
 
