@@ -395,8 +395,8 @@ export default function DMPage() {
 { text: "おはよ〜！昨日嬉しすぎて寝れなかったﾈﾑｲ", sender: "other", time: "2025年03月05日午前08時50分" },
 { text: "おはよ〜。すごい忙しそうだね（汗）。無理せず頑張ってね！", sender: "other", time: "2025年03月08日午前08時02分" },
 { text: "おはよ〜。暇な時でも返してくれたら嬉しいなー。", sender: "other", time: "2025年03月15日午前07時34分" },
-{ text: "おはよ〜!", sender: "other", time: "2025年07月20日午前07時02分" , image: "/rist4.jpg"},
-{ text: "おはよ〜。", sender: "other", time: "2025年07月23日午前08時02分" , image: "/rist5.jpg"},
+{ text: "おはよ〜!", sender: "other", time: "2025年07月20日午前07時02分" , image: "/ristcut4.jpg"},
+{ text: "おはよ〜。", sender: "other", time: "2025年07月23日午前08時02分" , image: "/ristcut5.jpg"},
 { text: "今日の動画面白すぎたw過去１かも", sender: "other", time: "午後09時25分" },
 
 
