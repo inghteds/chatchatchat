@@ -397,7 +397,7 @@ export default function DMPage() {
 { text: "おはよ〜。暇な時でも返してくれたら嬉しいなー。", sender: "other", time: "2025年03月15日午前07時34分" },
 { text: "おはよ〜!", sender: "other", time: "2025年07月20日午前07時02分" , image: "/rist.png"},
 { text: "おはよ〜。", sender: "other", time: "2025年07月23日午前08時02分" , image: "/rist.png"},
-{ text: "今日の動画面白すぎたw過去１かも", sender: "other", time: "2025年11月8日午後09時25分" },
+{ text: "今日の動画面白すぎたw過去１かも", sender: "other", time: "午後09時25分" },
 
 
 
