@@ -392,6 +392,14 @@ export default function DMPage() {
 { text: "", sender: "other", time: "2025年03月03日午後10時28分" },
 { text: "", sender: "me", time: "2025年03月04日午後08時42分" },
 { text: "", sender: "other", time: "2025年03月04日午後08時50分" },
+{ text: "おはよ〜！昨日嬉しすぎて寝れなかったﾈﾑｲ", sender: "other", time: "2025年03月05日午前08時50分" },
+{ text: "おはよ〜。すごい忙しそうだね（汗）。無理せず頑張ってね！", sender: "other", time: "2025年03月08日午前08時02分" },
+{ text: "おはよ〜。暇な時でも返してくれたら嬉しいなー。", sender: "other", time: "2025年03月15日午前07時34分" },
+{ text: "おはよ〜。", sender: "other", time: "2025年07月23日午前08時02分" , image: "/rist.png"},
+
+
+
+
 
 
 
@@ -445,13 +453,8 @@ export default function DMPage() {
 
 // 📡 Realtime購読（Broadcast方式＋ログ出力）
 useEffect(() => {
-  let channel: ReturnType<typeof supabase.channel> | null = null;
-
-  const run = () => {
-    console.log("📡 Realtime接続を開始します...");
-
-    channel = supabase
-      .channel(`topic:messages`, { config: { broadcast: { self: true } } })
+    const changes = supabase
+      .channel(`topic:messages`, { config: { private: true } })
       .on(
         "broadcast",
         { event: "INSERT" },
@@ -492,17 +495,6 @@ useEffect(() => {
         console.log("🔗 チャンネル状態:", status);
       });
 
-    console.log("✅ Realtime購読を開始しました (topic:messages)");
-  };
-
-  // 実行
-  void run();
-
-  // クリーンアップ
-  return () => {
-    console.log("🔌 Realtimeチャンネルを解除します...");
-    if (channel) void supabase.removeChannel(channel);
-  };
 }, [supabase]);
 
 
