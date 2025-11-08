@@ -451,7 +451,7 @@ useEffect(() => {
     console.log("📡 Realtime接続を開始します...");
 
     channel = supabase
-      .channel("topic:messages", { config: { broadcast: { self: true } } })
+      .channel(`topic:messages`, { config: { broadcast: { self: true } } })
       .on(
         "broadcast",
         { event: "INSERT" },
