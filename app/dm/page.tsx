@@ -406,6 +406,20 @@ export default function DMPage() {
 
   ]);
   const [input, setInput] = useState("");
+  const [displayName, setDisplayName] = useState("えみ");
+  const [isMeView, setIsMeView] = useState(true);
+
+  const toggleName = () => {
+    setDisplayName((prev) => (prev === "えみ" ? "いんと" : "えみ"));
+    setIsMeView((prev) => !prev); // ← me / other の左右を反転
+  };
+
+  const getDisplaySender = (sender: string) => {
+    if (!isMeView) {
+      return sender === "me" ? "other" : "me";
+    }
+    return sender;
+  };
 
   // 現在時刻を日本語形式で取得
   const getCurrentTime = () => {
@@ -506,7 +520,13 @@ useEffect(() => {
         {/* 固定ヘッダー */}
         <div className={styles.fixedHeader}>
           <ArrowLeft size={20} className={styles.headerIconLeft} />
-          <div className={styles.headerTitle}>えみ</div>
+            <div
+            className={styles.headerTitle}
+            onClick={toggleName}
+            style={{ cursor: "pointer" }} // ←マウスカーソル変更でわかりやすく
+          >
+            {displayName}
+          </div>
           <Info size={20} className={styles.headerIconRight} />
         </div>
 
@@ -536,24 +556,29 @@ useEffect(() => {
 
           {/* チャット本文 */}
           <div className={styles.chatArea}>
-            {messages.map((m, i) => (
-              <div
-                key={i}
-                className={`${styles.message} ${
-                  m.sender === "me" ? styles.right : styles.left
-                }`}
-              >
-                {m.image && (
-                  <img
-                    src={m.image}
-                    alt="添付画像"
-                    className={styles.messageImage}
-                  />
-                )}
-                <p className={styles.bubble}>{m.text}</p>
-                {m.time && <span className={styles.time}>{m.time}</span>}
-              </div>
-            ))}
+            {messages.map((m, i) => {
+              // ★追加：me/otherを視点で反転
+              const viewSender = getDisplaySender(m.sender);
+
+              return (
+                <div
+                  key={i}
+                  className={`${styles.message} ${
+                    viewSender === "me" ? styles.right : styles.left
+                  }`}
+                >
+                  {m.image && (
+                    <img
+                      src={m.image}
+                      alt="添付画像"
+                      className={styles.messageImage}
+                    />
+                  )}
+                  <p className={styles.bubble}>{m.text}</p>
+                  {m.time && <span className={styles.time}>{m.time}</span>}
+                </div>
+              );
+            })}
           </div>
         </div>
 
