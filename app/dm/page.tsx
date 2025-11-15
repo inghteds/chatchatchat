@@ -154,7 +154,7 @@ export default function DMPage() {
 { text: "嬉しい😭ずっと待ってたよ！", sender: "other", time: "午後06時13分" },
 { text: "めっちゃいい動画撮れた！", sender: "me", time: "午後06時13分" },
 { text: "え〜楽しみすぎる", sender: "other", time: "午後06時13分" },
-//{ text: "今日の動画面白すぎたw過去１かも", sender: "other", time: "午後09時25分" },
+{ text: "今日の動画面白すぎたw過去１かも", sender: "other", time: "午後09時25分" },
   ]);
 
   const [input, setInput] = useState("");
