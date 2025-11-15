@@ -150,6 +150,10 @@ export default function DMPage() {
 { text: "", sender: "other", time: "2025年06月25日午前08時02分" , image: "/ristcut4.jpg"},
 { text: "", sender: "other", time: "2025年07月28日午前08時02分" , image: "/ristcut3.jpg"},
 { text: "", sender: "other", time: "2025年07月30日午前08時02分" , image: "/ristcut1.jpg"},
+{ text: "今まで返さなくてごめん。", sender: "me", time: "午後06時12分" },
+{ text: "嬉しい😭ずっと待ってたよ！", sender: "other", time: "午後06時13分" },
+{ text: "めっちゃいい動画撮れた！", sender: "me", time: "午後06時13分" },
+{ text: "え〜楽しみすぎる", sender: "other", time: "午後06時13分" },
 //{ text: "今日の動画面白すぎたw過去１かも", sender: "other", time: "午後09時25分" },
   ]);
 
