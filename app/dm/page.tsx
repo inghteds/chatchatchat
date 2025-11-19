@@ -150,11 +150,11 @@ export default function DMPage() {
 { text: "", sender: "other", time: "2025年06月25日午前08時02分" , image: "/ristcut4.jpg"},
 { text: "", sender: "other", time: "2025年07月28日午前08時02分" , image: "/ristcut3.jpg"},
 { text: "", sender: "other", time: "2025年07月30日午前08時02分" , image: "/ristcut1.jpg"},
-//{ text: "今まで返さなくてごめん。", sender: "me", time: "午後07時51分" },
-//{ text: "嬉しい😭ずっと待ってたよ！", sender: "other", time: "午後07時51分" },
-//{ text: "めっちゃいい動画撮れた！", sender: "me", time: "午後07時51分" },
-//{ text: "え〜楽しみすぎる", sender: "other", time: "午後07時51分" },
-//{ text: "今日の動画面白すぎたw過去１かも", sender: "other", time: "午後09時25分" },
+{ text: "今まで返さなくてごめん。", sender: "me", time: "午後07時51分" },
+{ text: "大丈夫だよ！戻ってきてくれて嬉しい😭", sender: "other", time: "午後07時51分" },
+{ text: "めっちゃ面白い動画撮れた！", sender: "me", time: "午後07時51分" },
+{ text: "楽しみすぎるよ〜", sender: "other", time: "午後07時51分" },
+{ text: "今日の動画面白すぎたw過去１かも", sender: "other", time: "午後09時25分" },
   ]);
 
   const [input, setInput] = useState("");
@@ -177,7 +177,7 @@ export default function DMPage() {
   };
 
   // 現在時刻を日本語形式で取得（固定）
-  const getCurrentTime = () => "午後07時51分";
+  const getCurrentTime = () => "午後09時26分";
 
   // === メッセージ送信 ===
   const sendMessage = async (e: React.FormEvent) => {
