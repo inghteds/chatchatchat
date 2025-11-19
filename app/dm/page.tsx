@@ -140,7 +140,7 @@ export default function DMPage() {
 { text: "おはよ〜！昨日嬉しすぎて寝れなかったﾈﾑｲ", sender: "other", time: "2025年03月05日午前08時50分" },
 { text: "おはよ〜。すごい忙しそうだね（汗）。無理せず頑張ってね！", sender: "other", time: "2025年03月08日午前08時02分" },
 { text: "おはよ〜。暇な時でも返してくれたら嬉しいなー。", sender: "other", time: "2025年03月15日午前07時34分" },
-{ text: "", sender: "other", time: "2025年04月20日午前07時02分" , image: "/ristcut4.jpg"},
+{ text: "おはよ〜初めてリスカしてみたけどどう？", sender: "other", time: "2025年04月20日午前07時02分" , image: "/ristcut4.jpg"},
 { text: "", sender: "other", time: "2025年04月23日午前08時02分" , image: "/ristcut5.jpg"},
 { text: "", sender: "other", time: "2025年04月25日午前08時02分" , image: "/ristcut2.jpg"},
 { text: "", sender: "other", time: "2025年04月25日午前08時02分" , image: "/ristcut3.jpg"},
@@ -150,11 +150,11 @@ export default function DMPage() {
 { text: "", sender: "other", time: "2025年06月25日午前08時02分" , image: "/ristcut4.jpg"},
 { text: "", sender: "other", time: "2025年07月28日午前08時02分" , image: "/ristcut3.jpg"},
 { text: "", sender: "other", time: "2025年07月30日午前08時02分" , image: "/ristcut1.jpg"},
-{ text: "今まで返さなくてごめん。", sender: "me", time: "午後06時12分" },
-{ text: "嬉しい😭ずっと待ってたよ！", sender: "other", time: "午後06時13分" },
-{ text: "めっちゃいい動画撮れた！", sender: "me", time: "午後06時13分" },
-{ text: "え〜楽しみすぎる", sender: "other", time: "午後06時13分" },
-{ text: "今日の動画面白すぎたw過去１かも", sender: "other", time: "午後09時25分" },
+//{ text: "今まで返さなくてごめん。", sender: "me", time: "午後07時51分" },
+//{ text: "嬉しい😭ずっと待ってたよ！", sender: "other", time: "午後07時51分" },
+//{ text: "めっちゃいい動画撮れた！", sender: "me", time: "午後07時51分" },
+//{ text: "え〜楽しみすぎる", sender: "other", time: "午後07時51分" },
+//{ text: "今日の動画面白すぎたw過去１かも", sender: "other", time: "午後09時25分" },
   ]);
 
   const [input, setInput] = useState("");
@@ -177,7 +177,7 @@ export default function DMPage() {
   };
 
   // 現在時刻を日本語形式で取得（固定）
-  const getCurrentTime = () => "午後9時26分";
+  const getCurrentTime = () => "午後07時51分";
 
   // === メッセージ送信 ===
   const sendMessage = async (e: React.FormEvent) => {
