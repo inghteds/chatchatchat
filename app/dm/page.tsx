@@ -9,12 +9,12 @@ export default function DMPage() {
    {
       text: "オフ会楽しかったー！😆",
       sender: "other",
-      time: "2024年01月03日午後8時25分",
+      time: "2025年01月03日午後8時25分",
     },
     {
       text: "どん兵衛ありがとね！毎日食べる",
       sender: "me",
-      time: "2024年01月03日午後9時30分",
+      time: "2025年01月03日午後9時30分",
       image: "/picture2.png",
     },
     { text: "嬉しい〜☺️", sender: "other", time: "2025年01月03日午後9時32分" },
@@ -67,7 +67,7 @@ export default function DMPage() {
 { text: "じゃあなんか考えとくわ", sender: "me", time: "2025年01月22日午後05時55分" },
 { text: "やったー！楽しみにしとくね", sender: "other", time: "2025年01月22日午後06時01分" },
 { text: "今日も動画あげてくれてありがと〜疲れ吹き飛んだ", sender: "other", time: "2025年01月23日午後10時30分" },
-{ text: "こちらこそ！楽しんでもらえて嬉しいわ", sender: "me", time: "2025年01月34日午後07時24分" },
+{ text: "こちらこそ！楽しんでもらえて嬉しいわ", sender: "me", time: "2025年01月24日午後07時24分" },
 { text: "毎日投稿無理しないでね", sender: "other", time: "2025年01月24日午後07時42分" },
 { text: "えみちゃんがみてくれるんやったら俺も頑張るでー", sender: "me", time: "2025年01月25日午後09時05分" },
 { text: "めっちゃ嬉しい🥹", sender: "other", time: "2025年01月25日午後09時11分" },
