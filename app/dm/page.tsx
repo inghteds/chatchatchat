@@ -194,7 +194,7 @@ export default function DMPage() {
     const newMessage = {
       text: hasText ? input : "",
       image: hasImage ? selectedImage : undefined,
-      sender: nextSender,
+      sender: "other",
       time: getCurrentTime(),
     };
 
