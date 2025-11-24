@@ -171,7 +171,7 @@ export default function DMPage() {
 
   const getDisplaySender = (sender: string) => {
     if (!isMeView) {
-      return sender === "me" ? "other" : "me";
+      return sender === "other" ? "other" : "me";
     }
     return sender;
   };
